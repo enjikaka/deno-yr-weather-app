@@ -19,7 +19,7 @@
         let ac;
 
         async function getSuggestions (q) {
-            const res = await fetch('/suggestions?q=' + q);
+            const res = await fetch('/suggestions?q=' + q, { signal: ac.signal });
             const json = await res.json();
 
             return json;
@@ -27,6 +27,10 @@
 
         async function renderSuggestions (e) {
             const suggestions = await getSuggestions(e.target.value);
+
+            if (ac.signal.aborted) {
+                throw new Error('Aborted');
+            }
 
             window.placeSuggestions.innerHTML = suggestions.map(s => '<option value="'+s.name+'">').join('');
         }
