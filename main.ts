@@ -93,6 +93,17 @@ async function handleRequest(req: Request) {
     const [, path] = url.pathname.split('/');
     const q = url.searchParams.get('q');
 
+    if (path === "style.css") {
+        const body = await Deno.readTextFile('style.css');
+
+        return new Response(body, {
+            status: 200,
+            headers: new Headers({
+                'Content-Type': 'text/css',
+            })
+        });
+    }
+
     if (path === "" && !q) {
         const body = await renderSearchPage();
 
