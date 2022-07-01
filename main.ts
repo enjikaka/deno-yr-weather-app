@@ -37,61 +37,7 @@ async function getPlaceNameSuggetions (q: string) {
 const html = String.raw;
 
 function renderSearchPage() {
-    return html`
-    <!doctype html>
-    <meta charset="utf-8">
-    <html>
-        <head>
-            <title>Väder från YR</title>
-            <style>
-            :root {
-                --gr: 1.61803398875em;
-            }
-
-            body {
-                margin: var(--gr);
-                font-family: system-ui;
-            }
-
-            figure {
-                width: calc(5 * var(--gr));
-            }
-
-            img {
-                width: 100%;
-            }
-
-            header {
-                border-bottom: 1px solid #666;
-            }
-            </style>
-        </head>
-        <body>
-            <header>
-                <h1>Väder från YR</h1>
-            </header>
-            <form action="/">
-            <label for="placeSearch">Sök efter din plats:</label>
-            <input list="placeSuggestions" id="placeSearch" name="q" />
-            <datalist id="placeSuggestions"></datalist>
-            <button>Visa</button>
-            </form>
-            <script>
-            async function getSuggestions (q) {
-                const res = await fetch('/suggestions?q=' + q);
-                const json = await res.json();
-
-                return json;
-            }
-
-            window.placeSearch.addEventListener('input', async (e) => {
-                const suggestions = await getSuggestions(e.target.value);
-                window.placeSuggestions.innerHTML = suggestions.map(s => '<option value="'+s.name+'">').join('');
-            });
-            </script>
-        </body>
-    </html>
-    `;
+    return Deno.readTextFile('search-page');
 }
 
 function renderPage (weatherReport: Object): string {
@@ -169,7 +115,9 @@ async function handleRequest(req: Request) {
     const q = url.searchParams.get('q');
 
     if (path === "" && !q) {
-        return new Response(renderSearchPage(), {
+        const body = await renderSearchPage();
+
+        return new Response(, {
             status: 200,
             headers: new Headers({
                 'Content-Type': 'text/html',
@@ -180,7 +128,7 @@ async function handleRequest(req: Request) {
     if (path === "suggestions") {
         try {
             const suggestions = await getPlaceNameSuggetions(q);
-            
+
             return new Response(JSON.stringify(suggestions), {
                 status: 200,
                 headers: new Headers({
