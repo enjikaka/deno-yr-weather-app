@@ -117,7 +117,7 @@ async function handleRequest(req: Request) {
     if (path === "" && !q) {
         const body = await renderSearchPage();
 
-        return new Response(, {
+        return new Response(body, {
             status: 200,
             headers: new Headers({
                 'Content-Type': 'text/html',
