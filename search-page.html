@@ -45,7 +45,7 @@
             try {
                 renderSuggestions(e, { signal: ac.signal });
             } catch (e) {
-                console.error(e);
+                // Ignore aborted promise
             }
         });
         </script>
