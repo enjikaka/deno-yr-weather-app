@@ -51,32 +51,11 @@ function renderPage (weatherReport: Object): string {
 
     return html`
         <!doctype html>
-        <meta charset="utf-8">
         <html>
             <head>
+                <meta charset="utf-8">
                 <title>Vädret i ${weatherReport.properties.meta.name}</title>
-                <style>
-                :root {
-                    --gr: 1.61803398875em;
-                }
-
-                body {
-                    margin: var(--gr);
-                    font-family: system-ui;
-                }
-
-                figure {
-                    width: calc(5 * var(--gr));
-                }
-
-                img {
-                    width: 100%;
-                }
-
-                header {
-                    border-bottom: 1px solid #666;
-                }
-                </style>
+                <link rel="stylesheet" href="style.css">
             </head>
             <body>
                 <header>

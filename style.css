@@ -1,0 +1,20 @@
+:root {
+    --gr: 1.61803398875em;
+}
+
+body {
+    margin: var(--gr);
+    font-family: system-ui;
+}
+
+figure {
+    width: calc(5 * var(--gr));
+}
+
+img {
+    width: 100%;
+}
+
+header {
+    border-bottom: 1px solid #666;
+}
