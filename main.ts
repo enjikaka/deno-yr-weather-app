@@ -37,7 +37,7 @@ async function getPlaceNameSuggetions (q: string) {
 const html = String.raw;
 
 function renderSearchPage() {
-    return Deno.readTextFile('search-page');
+    return Deno.readTextFile('search-page.html');
 }
 
 function renderPage (weatherReport: Object): string {
